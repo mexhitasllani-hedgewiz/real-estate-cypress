@@ -1,0 +1,30 @@
+{
+  "name": "untitled1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "axios": "^1.11.0",
+    "chai": "^6.0.1",
+    "cypress": "^14.5.4",
+    "dotenv": "^17.2.2",
+    "lodash": "^4.17.21",
+    "mocha": "^11.7.2",
+    "prettier": "^3.8.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/register": "^7.28.3"
+  }
+}
