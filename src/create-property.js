@@ -4,8 +4,14 @@ import { addProperty } from "./libs/backend/index.js";
 class CreateProperty {
   async createMany(properties) {
     const formattedProperties = this._formatProperties(properties);
+    console.log(
+      `[createProperty] preparing to create ${formattedProperties.length} properties`,
+    );
 
     for (const property of formattedProperties) {
+      console.log(
+        `[createProperty] creating property ${property.providerId ?? "unknown"}`,
+      );
       await addProperty(property);
     }
   }

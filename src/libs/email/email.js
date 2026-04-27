@@ -9,6 +9,7 @@ const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 
 async function sendEmail({ properties, aiResponse }) {
   const propertiesNumber = properties.length;
+  console.log(`[email] preparing email for ${propertiesNumber} properties`);
   const html = `
   <!DOCTYPE html>
 <html lang="en">
@@ -97,6 +98,7 @@ async function sendEmail({ properties, aiResponse }) {
         headers: {
           "Content-Type": "application/json",
         },
+        timeout: 30000,
       },
     );
 

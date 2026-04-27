@@ -6,10 +6,12 @@ const url = process.env.BACKEND_URL;
 const apiKey = process.env.PROPERTY_INGEST_API_KEY;
 
 function addProperty(property) {
+  console.log(`[backend] POST ${url}/properties for ${property.providerId}`);
   return axios.post(`${url}/properties`, property, {
     headers: {
       "x-api-key": apiKey,
     },
+    timeout: 30000,
   });
 }
 
