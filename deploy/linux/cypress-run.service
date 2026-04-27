@@ -1,0 +1,13 @@
+[Unit]
+Description=Run Cypress scraping job
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=CHANGE_ME
+WorkingDirectory=/opt/real-estate
+Environment=APP_DIR=/opt/real-estate
+Environment=LOG_FILE=/opt/real-estate/logs/cypress-run.log
+Environment=NODE_VERSION=18
+ExecStart=/opt/real-estate/deploy/linux/run-cypress.sh
