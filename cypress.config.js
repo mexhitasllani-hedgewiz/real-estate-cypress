@@ -4,6 +4,8 @@ import { handleDuaShpi } from "./src/handle-dua-shpi.js";
 import { appendLog } from "./src/libs/logger.js";
 
 export default defineConfig({
+  video: false,
+  experimentalMemoryManagement: true,
   e2e: {
     setupNodeEvents(on, config) {
       on("task", {
