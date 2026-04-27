@@ -1,15 +1,16 @@
 import _ from "lodash";
 import { addProperty } from "./libs/backend/index.js";
+import { appendLog } from "./libs/logger.js";
 
 class CreateProperty {
   async createMany(properties) {
     const formattedProperties = this._formatProperties(properties);
-    console.log(
+    appendLog(
       `[createProperty] preparing to create ${formattedProperties.length} properties`,
     );
 
     for (const property of formattedProperties) {
-      console.log(
+      appendLog(
         `[createProperty] creating property ${property.providerId ?? "unknown"}`,
       );
       await addProperty(property);

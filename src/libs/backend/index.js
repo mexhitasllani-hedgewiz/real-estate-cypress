@@ -1,12 +1,13 @@
 import axios from "axios";
 import dotenv from "dotenv";
+import { appendLog } from "../logger.js";
 dotenv.config();
 
 const url = process.env.BACKEND_URL;
 const apiKey = process.env.PROPERTY_INGEST_API_KEY;
 
 function addProperty(property) {
-  console.log(`[backend] POST ${url}/properties for ${property.providerId}`);
+  appendLog(`[backend] POST ${url}/properties for ${property.providerId}`);
   return axios.post(`${url}/properties`, property, {
     headers: {
       "x-api-key": apiKey,

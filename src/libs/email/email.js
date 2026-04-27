@@ -1,5 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
+import { appendLog } from "../logger.js";
 dotenv.config();
 
 const MJ_APIKEY_PUBLIC = process.env.MJ_APIKEY_PUBLIC;
@@ -9,7 +10,7 @@ const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 
 async function sendEmail({ properties, aiResponse }) {
   const propertiesNumber = properties.length;
-  console.log(`[email] preparing email for ${propertiesNumber} properties`);
+  appendLog(`[email] preparing email for ${propertiesNumber} properties`);
   const html = `
   <!DOCTYPE html>
 <html lang="en">
@@ -102,14 +103,14 @@ async function sendEmail({ properties, aiResponse }) {
       },
     );
 
-    console.log("Email sent:", response.data);
+    appendLog("[email] email sent successfully");
 
     return "Email sent";
   } catch (error) {
-    console.error(
-      "Error sending email:",
-      error.response?.data || error.message,
+    appendLog(
+      `[email] error sending email: ${JSON.stringify(error.response?.data || error.message)}`,
     );
+    throw error;
   }
 }
 
