@@ -14,6 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Restore database cache
+        uses: actions/cache/restore@v4
+        with:
+          path: src/filter-properties/database.json
+          key: filter-properties-db-${{ github.run_id }}
+          restore-keys: |
+            filter-properties-db-
+
+      - name: Ensure database.json exists
+        run: |
+          test -f src/filter-properties/database.json || echo '{}' > src/filter-properties/database.json
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -52,3 +64,10 @@ jobs:
           name: cypress-videos
           path: cypress/videos
           if-no-files-found: ignore
+
+      - name: Save database cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: src/filter-properties/database.json
+          key: filter-properties-db-${{ github.run_id }}
