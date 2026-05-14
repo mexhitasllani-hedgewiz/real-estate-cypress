@@ -1,4 +1,4 @@
-name: Cypress Runner
+name: Cypress Runner Manual
 
 on:
   workflow_dispatch:
