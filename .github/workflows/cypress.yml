@@ -2,8 +2,6 @@ name: Cypress Runner
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/10 * * * *"
 
 jobs:
   cypress:
