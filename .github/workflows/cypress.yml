@@ -1,4 +1,4 @@
-name: Cypress Runner Manual
+name: Cypress Runner From GitHub Actions
 
 on:
   workflow_dispatch:
