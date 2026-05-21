@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { addProperty } from "./libs/backend/index.js";
+import { addPropertyList } from "./libs/backend/index.js";
 import { appendLog } from "./libs/logger.js";
 
 class CreateProperty {
@@ -8,13 +8,10 @@ class CreateProperty {
     appendLog(
       `[createProperty] preparing to create ${formattedProperties.length} properties`,
     );
-
-    for (const property of formattedProperties) {
-      appendLog(
-        `[createProperty] creating property ${property.providerId ?? "unknown"}`,
-      );
-      await addProperty(property);
-    }
+    appendLog(
+      `[createProperty] creating ${formattedProperties.length} properties in bulk`,
+    );
+    await addPropertyList(formattedProperties);
   }
 
   _formatProperties(properties) {

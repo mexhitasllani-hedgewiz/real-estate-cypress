@@ -16,4 +16,14 @@ function addProperty(property) {
   });
 }
 
-export { addProperty };
+function addPropertyList(properties) {
+  appendLog(`[backend] POST ${url}/properties/bulk for ${properties.length} properties`);
+  return axios.post(`${url}/properties/bulk`, properties, {
+    headers: {
+      "x-api-key": apiKey,
+    },
+    timeout: 30000,
+  });
+}
+
+export { addProperty, addPropertyList };
