@@ -4,3 +4,5 @@ dist/
 *.log
 .idea
 /.idea/
+playwright-report/
+test-results/

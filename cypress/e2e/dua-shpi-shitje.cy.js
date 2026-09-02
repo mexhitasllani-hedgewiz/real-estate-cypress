@@ -1,12 +1,10 @@
 describe("Dua shpi shitje", () => {
   it("passes", () => {
     cy.task("log", "dua-shpi-shitje: visiting listing page");
-    cy.visit(
-      "https://duashpi.al/kerko-prona?page=2&business_type=sale&city=Tirane",
-    );
+    cy.visit("https://duashpi.al/kerko-prona");
 
     cy.task("log", "dua-shpi-shitje: page loaded, handling consent button");
-    cy.clickIfExists('Prano');
+    cy.clickIfExists("Prano");
 
     const properties = [];
 

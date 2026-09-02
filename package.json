@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "playwright:run": "playwright test"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
-    "@babel/register": "^7.28.3"
+    "@babel/register": "^7.28.3",
+    "@playwright/test": "^1.62.1"
   }
 }
