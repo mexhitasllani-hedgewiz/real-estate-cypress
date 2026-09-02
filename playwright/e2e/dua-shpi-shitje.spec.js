@@ -4,15 +4,23 @@ import { appendLog } from "../../src/libs/logger.js";
 
 test("Dua shpi shitje", async ({ page }) => {
   appendLog("[playwright] dua-shpi-shitje: visiting listing page");
-  await page.goto("https://duashpi.al/kerko-prona", {
-    waitUntil: "domcontentloaded",
-  });
+  await page.goto(
+    "https://duashpi.al/kerko-prona?page=2&business_type=sale&city=Tirane",
+    {
+      waitUntil: "domcontentloaded",
+    },
+  );
 
   appendLog(
     "[playwright] dua-shpi-shitje: page loaded, handling consent button",
   );
   const consentButton = page.getByRole("button", { name: "Prano" });
-  if (await consentButton.first().isVisible().catch(() => false)) {
+  if (
+    await consentButton
+      .first()
+      .isVisible()
+      .catch(() => false)
+  ) {
     await consentButton.first().click();
   }
 
