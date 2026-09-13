@@ -5,6 +5,7 @@ import { createProperty } from "./create-property.js";
 import { appendLog } from "./libs/logger.js";
 
 async function handleDuaShpi({ properties }) {
+  const source = "duashpi";
   appendLog(
     `[duaShpiTask] received ${properties.length} raw properties from Cypress`,
   );
@@ -23,13 +24,14 @@ async function handleDuaShpi({ properties }) {
     );
 
     appendLog("[duaShpiTask] sending properties to backend");
-    await createProperty.createMany(filteredOutput);
+    await createProperty.createMany(filteredOutput, { source });
     appendLog("[duaShpiTask] backend createMany completed");
 
     appendLog("[duaShpiTask] sending notification email");
     const email = await sendEmail({
       properties: filteredOutput,
       aiResponse: "",
+      source,
     });
     appendLog("[duaShpiTask] email step completed");
 

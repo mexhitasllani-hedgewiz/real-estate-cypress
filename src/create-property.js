@@ -3,8 +3,8 @@ import { addPropertyList } from "./libs/backend/index.js";
 import { appendLog } from "./libs/logger.js";
 
 class CreateProperty {
-  async createMany(properties) {
-    const formattedProperties = this._formatProperties(properties);
+  async createMany(properties, { source } = {}) {
+    const formattedProperties = this._formatProperties(properties, source);
     appendLog(
       `[createProperty] preparing to create ${formattedProperties.length} properties`,
     );
@@ -14,7 +14,7 @@ class CreateProperty {
     await addPropertyList(formattedProperties);
   }
 
-  _formatProperties(properties) {
+  _formatProperties(properties, source) {
     return _.map(properties, (property) => {
       return {
         title: property.title,
@@ -22,6 +22,7 @@ class CreateProperty {
         description: property.content,
         price: property.price,
         providerId: property.code,
+        ...(source ? { source } : {}),
       };
     });
   }

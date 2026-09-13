@@ -6,3 +6,4 @@ dist/
 /.idea/
 playwright-report/
 test-results/
+src/filter-properties/database-gazetacelesi.json

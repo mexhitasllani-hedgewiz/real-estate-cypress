@@ -8,7 +8,7 @@ const MJ_APIKEY_PRIVATE = process.env.MJ_APIKEY_PRIVATE;
 const SENDER_EMAIL = process.env.SENDER_EMAIL;
 const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL;
 
-async function sendEmail({ properties, aiResponse }) {
+async function sendEmail({ properties, aiResponse, source }) {
   const propertiesNumber = properties.length;
   appendLog(`[email] preparing email for ${propertiesNumber} properties`);
   const html = `
@@ -51,7 +51,8 @@ async function sendEmail({ properties, aiResponse }) {
     </style>
 </head>
 <body>
-    <h2>Sample Table</h2>
+    <h2>Lista e apartamenteve</h2>
+    ${source ? `<p>Source: ${escapeHtml(source)}</p>` : ""}
     <h3>${aiResponse}</h3>
     <table>
         <thead>
@@ -86,7 +87,7 @@ async function sendEmail({ properties, aiResponse }) {
                 Name: "You",
               },
             ],
-            Subject: `Lista e apartamenteve (${propertiesNumber} New)`,
+            Subject: `Lista e apartamenteve (${propertiesNumber} New)${source ? ` - ${source}` : ""}`,
             HTMLPart: html,
           },
         ],
@@ -112,6 +113,20 @@ async function sendEmail({ properties, aiResponse }) {
     );
     throw error;
   }
+}
+
+function escapeHtml(value) {
+  return String(value).replace(
+    /[&<>"']/g,
+    (character) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[character],
+  );
 }
 
 function tableRow(property) {

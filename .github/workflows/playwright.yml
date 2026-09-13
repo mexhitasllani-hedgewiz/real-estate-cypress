@@ -24,6 +24,14 @@ jobs:
         run: |
           test -f src/filter-properties/database.json || echo '{}' > src/filter-properties/database.json
 
+      - name: Restore Gazeta Celesi database cache
+        uses: actions/cache/restore@v4
+        with:
+          path: src/filter-properties/database-gazetacelesi.json
+          key: filter-properties-gazetacelesi-db-${{ github.run_id }}
+          restore-keys: |
+            filter-properties-gazetacelesi-db-
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -51,7 +59,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright
-        run: npx playwright test playwright/e2e/dua-shpi-shitje.spec.js
+        run: >-
+          npx playwright test --workers=2
+          playwright/e2e/dua-shpi-shitje.spec.js
+          playwright/e2e/gazeta-celesi-shitje.spec.js
 
       - name: Upload Playwright results
         if: failure()
@@ -67,3 +78,10 @@ jobs:
         with:
           path: src/filter-properties/database.json
           key: filter-properties-db-${{ github.run_id }}
+
+      - name: Save Gazeta Celesi database cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: src/filter-properties/database-gazetacelesi.json
+          key: filter-properties-gazetacelesi-db-${{ github.run_id }}
