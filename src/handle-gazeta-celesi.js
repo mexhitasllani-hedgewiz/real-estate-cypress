@@ -2,6 +2,7 @@ import { sendEmail } from "./libs/email/email.js";
 import { returnOnlyNewNotifications } from "./filter-properties/return-only-new-notifications.js";
 import { createProperty } from "./create-property.js";
 import { appendLog } from "./libs/logger.js";
+import { formatPrice } from "./formatters/format-price.js";
 
 async function handleGazetaCelesi({ properties }) {
   const source = "gazetacelesi";
@@ -41,15 +42,6 @@ async function handleGazetaCelesi({ properties }) {
     );
     throw error;
   }
-}
-
-function formatPrice(price) {
-  if (typeof price !== "string") return price;
-
-  return price.replace(
-    /^\s*€\s*([\d.]+)\s*$/,
-    (_, amount) => `${amount.replace(/\./g, ",")} €`,
-  );
 }
 
 export { handleGazetaCelesi };

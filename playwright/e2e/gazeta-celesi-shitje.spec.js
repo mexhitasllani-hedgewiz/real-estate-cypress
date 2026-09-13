@@ -4,7 +4,7 @@ import { appendLog } from "../../src/libs/logger.js";
 import { handleGazetaCelesi } from "../../src/handle-gazeta-celesi.js";
 
 const listingUrl =
-  "https://www.gazetacelesi.al/shtepi-ne-shitje/apartament?page=1&geoType=location&location=Tirane&locationID=2722&currency=EURO";
+  "https://www.gazetacelesi.al/shtepi-ne-shitje/apartament?currency=EURO&page=2&geoType=location&location=Tirane&locationID=2722";
 
 test("Gazeta Celesi shitje", async ({ page, context }, testInfo) => {
   const response = await page.goto(listingUrl, {
