@@ -60,8 +60,7 @@ jobs:
 
       - name: Run Playwright
         run: >-
-          npx playwright test --workers=2
-          playwright/e2e/dua-shpi-shitje.spec.js
+          npx playwright test
           playwright/e2e/gazeta-celesi-shitje.spec.js
 
       - name: Upload Playwright results
