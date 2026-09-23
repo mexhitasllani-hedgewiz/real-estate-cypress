@@ -1,0 +1,41 @@
+# Configure these in GitLab Settings > CI/CD > Variables:
+# BACKEND_URL, PROPERTY_INGEST_API_KEY, MJ_APIKEY_PUBLIC, MJ_APIKEY_PRIVATE,
+# SENDER_EMAIL, RECIPIENT_EMAIL. They are available directly to Node.js.
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - when: never
+
+stages:
+  - test
+
+playwright:
+  stage: test
+  image: node:24-bookworm
+  timeout: 30m
+  # Serialize runs so they do not overwrite each other's database cache.
+  resource_group: playwright-database
+  variables:
+    CYPRESS_INSTALL_BINARY: "0"
+    npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  cache:
+    - key:
+        files:
+          - package-lock.json
+      paths:
+        - .npm/
+    - key: filter-properties-db
+      paths:
+        - src/filter-properties/database.json
+      when: always
+  before_script:
+    - test -f src/filter-properties/database.json || echo '{}' > src/filter-properties/database.json
+    - npm ci --prefer-offline
+    - npx playwright install --with-deps chromium
+  script:
+    - npx playwright test playwright/e2e/dua-shpi-shitje.spec.js
+  artifacts:
+    name: playwright-results
+    when: on_failure
+    paths:
+      - test-results/
