@@ -15,14 +15,18 @@ jobs:
       - name: Restore database cache
         uses: actions/cache/restore@v4
         with:
-          path: src/filter-properties/database.json
-          key: filter-properties-db-${{ github.run_id }}
+          path: |
+            src/filter-properties/database.json
+            src/filter-properties/database-century21.json
+          key: filter-properties-db-v2-${{ github.run_id }}
           restore-keys: |
+            filter-properties-db-v2-
             filter-properties-db-
 
-      - name: Ensure database.json exists
+      - name: Ensure database files exist
         run: |
           test -f src/filter-properties/database.json || echo '{}' > src/filter-properties/database.json
+          test -f src/filter-properties/database-century21.json || echo '{}' > src/filter-properties/database-century21.json
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -77,10 +81,11 @@ jobs:
       - name: Check exit IP
         run: curl --fail --show-error --silent --max-time 30 --socks5-hostname 127.0.0.1:1080 https://ifconfig.me
 
-      - name: Run Playwright through tunnel
+      - name: Run Dua Shpi and Century 21 in parallel through tunnel
         run: >-
-          npx playwright test --config=playwright.tunnel.config.js
+          npx playwright test --config=playwright.tunnel.config.js --workers=2
           playwright/e2e/dua-shpi-shitje.spec.js
+          playwright/e2e/century-21-shitje.spec.js
 
       - name: Upload Playwright results
         if: failure()
@@ -94,5 +99,7 @@ jobs:
         if: always()
         uses: actions/cache/save@v4
         with:
-          path: src/filter-properties/database.json
-          key: filter-properties-db-${{ github.run_id }}
+          path: |
+            src/filter-properties/database.json
+            src/filter-properties/database-century21.json
+          key: filter-properties-db-v2-${{ github.run_id }}
