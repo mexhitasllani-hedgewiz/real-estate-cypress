@@ -23,6 +23,20 @@ jobs:
             filter-properties-db-v2-
             filter-properties-db-
 
+      - name: Show cached files
+        run: |
+          echo "Restored cache contents:"
+          find src/filter-properties -maxdepth 1 -type f \( -name 'database.json' -o -name 'database-century21.json' \) -print
+          for file in src/filter-properties/database.json src/filter-properties/database-century21.json; do
+            if [ -f "$file" ]; then
+              echo "$file:"
+              cat "$file"
+              echo
+            else
+              echo "$file: missing"
+            fi
+          done
+
       - name: Ensure database files exist
         run: |
           test -f src/filter-properties/database.json || echo '{}' > src/filter-properties/database.json
@@ -93,6 +107,14 @@ jobs:
         with:
           name: playwright-results
           path: test-results
+          if-no-files-found: ignore
+
+      - name: Upload scraper logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-logs
+          path: logs/cypress-run.log
           if-no-files-found: ignore
 
       - name: Save database cache
