@@ -26,4 +26,14 @@ function addPropertyList(properties) {
   });
 }
 
-export { addProperty, addPropertyList };
+function updateExchangeRates(rates) {
+  appendLog(`[backend] POST ${url}/exchange-rate`);
+  return axios.post(`${url}/exchange-rate`, rates, {
+    headers: {
+      "x-api-key": apiKey,
+    },
+    timeout: 30000,
+  });
+}
+
+export { addProperty, addPropertyList, updateExchangeRates };

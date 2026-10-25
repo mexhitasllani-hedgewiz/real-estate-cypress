@@ -95,11 +95,12 @@ jobs:
       - name: Check exit IP
         run: curl --fail --show-error --silent --max-time 30 --socks5-hostname 127.0.0.1:1080 https://ifconfig.me
 
-      - name: Run Dua Shpi and Century 21 in parallel through tunnel
+      - name: Run Dua Shpi, Century 21 and Iliria through tunnel
         run: >-
           npx playwright test --config=playwright.tunnel.config.js --workers=2
           playwright/e2e/dua-shpi-shitje.spec.js
           playwright/e2e/century-21-shitje.spec.js
+          playwright/e2e/iliria-rates.spec.js
 
       - name: Upload Playwright results
         if: failure()
