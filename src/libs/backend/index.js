@@ -17,7 +17,9 @@ function addProperty(property) {
 }
 
 function addPropertyList(properties) {
-  appendLog(`[backend] POST ${url}/properties/bulk for ${properties.length} properties`);
+  appendLog(
+    `[backend] POST ${url}/properties/bulk for ${properties.length} properties`,
+  );
   return axios.post(`${url}/properties/bulk`, properties, {
     headers: {
       "x-api-key": apiKey,
@@ -28,12 +30,14 @@ function addPropertyList(properties) {
 
 function updateExchangeRates(rates) {
   appendLog(`[backend] POST ${url}/exchange-rate`);
-  return axios.post(`${url}/exchange-rate`, rates, {
-    headers: {
-      "x-api-key": apiKey,
-    },
-    timeout: 30000,
-  });
+  return axios
+    .post(`${url}/exchange-rates`, rates, {
+      headers: {
+        "x-api-key": apiKey,
+      },
+      timeout: 30000,
+    })
+    .catch((e) => console.log(e));
 }
 
 export { addProperty, addPropertyList, updateExchangeRates };
